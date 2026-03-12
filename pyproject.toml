@@ -1,0 +1,31 @@
+[project]
+name = "spanishpriceforecast"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "RusuJonathan",email = "jonathan.rusu03@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "numpy (>=2.4.3,<3.0.0)",
+    "pandas (>=3.0.1,<4.0.0)",
+    "scikit-learn (>=1.8.0,<2.0.0)",
+    "pathlib (>=1.0.1,<2.0.0)",
+    "pandas-stubs (>=3.0.0.260204,<4.0.0.0)",
+    "notebook (>=7.5.4,<8.0.0)",
+    "entsoe-py (>=0.7.10,<0.8.0)",
+    "python-dotenv (>=1.2.2,<2.0.0)",
+    "pyarrow (>=23.0.1,<24.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+    "matplotlib (>=3.10.8,<4.0.0)",
+    "statsmodels (>=0.14.6,<0.15.0)",
+    "pyyaml (>=6.0.3,<7.0.0)",
+    "lightgbm (>=4.6.0,<5.0.0)",
+    "optuna (>=4.7.0,<5.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

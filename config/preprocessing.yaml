@@ -1,0 +1,187 @@
+FILL_ZEROS:
+  - Energy_storage_Actual_Aggregated
+  - Energy_storage_Actual_Consumption
+
+FILL_FORECASTS:
+  WIND_FORECAST:
+    intraday_forecast: Intraday_Forecast_Wind_Onshore
+    day_ahead_forecast: Day_ahead_Forecast_Wind_Onshore
+
+  SOLAR_FORECAST:
+    intraday_forecast: Intraday_Forecast_Solar
+    day_ahead_forecast: Day_ahead_Forecast_Solar
+
+  TOTAL_FORECAST:
+    intraday_forecast: null
+    day_ahead_forecast: Forecast_Scheduled_Aggregated
+
+  LOAD_FORECAST:
+    intraday_forecast: null
+    day_ahead_forecast: Forecast_Scheduled_Consumption
+
+FEATURE_ENGINEERING:
+
+  TOTAL_PRODUCTION:
+    CONSUMPTION_COLS:
+      - Energy_storage_Actual_Consumption
+      - Hydro_Pumped_Storage_Actual_Consumption
+
+    PRODUCTION_COLS:
+      - Hydro_Water_Reservoir_Actual_Aggregated
+      - Fossil_Peat_Actual_Aggregated
+      - Geothermal_Actual_Aggregated
+      - Hydro_Run-of-river_and_poundage_Actual_Aggregated
+      - Fossil_Oil_Actual_Aggregated
+      - Other_Actual_Aggregated
+      - Wind_Offshore_Actual_Aggregated
+      - Marine_Actual_Aggregated
+      - Waste_Actual_Aggregated
+      - Hydro_Pumped_Storage_Actual_Aggregated
+      - Other_renewable_Actual_Aggregated
+      - Fossil_Oil_shale_Actual_Aggregated
+      - Fossil_Gas_Actual_Aggregated
+      - Wind_Onshore_Actual_Aggregated
+      - Biomass_Actual_Aggregated
+      - Solar_Actual_Aggregated
+      - Energy_storage_Actual_Aggregated
+      - Fossil_Hard_coal_Actual_Aggregated
+      - Fossil_Coal-derived_gas_Actual_Aggregated
+      - Fossil_Brown_coal/Lignite_Actual_Aggregated
+      - Nuclear_Actual_Aggregated
+
+    output: Total_Production_Actual
+
+  DELTA_FEATURES:
+    WIND_DELTA_INTRADAY:
+      forecast: Day_ahead_Forecast_Wind_Onshore
+      actual: Wind_Onshore_Actual_Aggregated
+      output: Wind_Production_Day_Ahead_Delta_Actual
+
+    WIND_DELTA_DAY_AHEAD:
+      forecast: Intraday_Forecast_Wind_Onshore
+      actual: Wind_Onshore_Actual_Aggregated
+      output: Wind_Production_Intraday_Delta_Actual
+
+    SOLAR_DELTA_DAY_AHEAD:
+      forecast: Day_ahead_Forecast_Solar
+      actual: Solar_Actual_Aggregated
+      output: Solar_Production_Day_Ahead_Delta_Actual
+
+    SOLAR_DELTA_INTRADAY:
+      forecast: Intraday_Forecast_Solar
+      actual: Solar_Actual_Aggregated
+      output: Solar_Production_Intraday_Delta_Actual
+
+    LOAD_DELTA:
+      forecast: Forecasted_Load
+      actual: Actual_Load
+      output: Load_Delta_Actual
+
+    TOTAL_PRODUCTION_DELTA:
+      output: Total_Production_Delta_Actual
+      forecast_aggregated: Forecast_Scheduled_Aggregated
+      forecast_consumption: Forecast_Scheduled_Consumption
+      actual: Total_Production_Actual
+
+  SCHEDULED_EXCHANGES:
+    imports:
+      output: Scheduled_Imports
+      cols:
+        - scheduled_exchange_PT>ES
+        - scheduled_exchange_FR>ES
+    exports:
+      output: Scheduled_Exports
+      cols:
+        - scheduled_exchange_ES>FR
+        - scheduled_exchange_ES>PT
+
+  REMAINDER_VOLUME:
+    output: Scheduled_Remainder_Volume
+    forecasted_load: Forecasted_Load
+    forecast_aggregated: Forecast_Scheduled_Aggregated
+    forecast_consumption: Forecast_Scheduled_Consumption
+    scheduled_imports: Scheduled_Imports
+    scheduled_exports: Scheduled_Exports
+
+  NTC_AVAILABLE:
+    - output: Intraday_NTC_Available_PT>ES
+      ntc: ntc_PT>ES
+      exchange: scheduled_exchange_PT>ES
+    - output: Intraday_NTC_Available_ES>PT
+      ntc: ntc_ES>PT
+      exchange: scheduled_exchange_ES>PT
+    - output: Intraday_NTC_Available_ES>FR
+      ntc: ntc_ES>FR
+      exchange: scheduled_exchange_ES>FR
+    - output: Intraday_NTC_Available_FR>ES
+      ntc: ntc_FR>ES
+      exchange: scheduled_exchange_FR>ES
+
+  LAGGED_FEATURES_TARGET:
+    - Long_Imbalance_Price
+    - Short_Imbalance_Price
+
+  LAGGED_FEATURES:
+    - Long_Imbalance_Price
+    - Short_Imbalance_Price
+    - Actual_Load
+    - Biomass_Actual_Aggregated
+    - Energy_storage_Actual_Aggregated
+    - Energy_storage_Actual_Consumption
+    - Fossil_Brown_coal/Lignite_Actual_Aggregated
+    - Fossil_Coal-derived_gas_Actual_Aggregated
+    - Fossil_Gas_Actual_Aggregated
+    - Fossil_Hard_coal_Actual_Aggregated
+    - Fossil_Oil_Actual_Aggregated
+    - Fossil_Oil_shale_Actual_Aggregated
+    - Fossil_Peat_Actual_Aggregated
+    - Geothermal_Actual_Aggregated
+    - Hydro_Pumped_Storage_Actual_Aggregated
+    - Hydro_Pumped_Storage_Actual_Consumption
+    - Hydro_Run-of-river_and_poundage_Actual_Aggregated
+    - Hydro_Water_Reservoir_Actual_Aggregated
+    - Marine_Actual_Aggregated
+    - Nuclear_Actual_Aggregated
+    - Other_Actual_Aggregated
+    - Other_renewable_Actual_Aggregated
+    - Solar_Actual_Aggregated
+    - Waste_Actual_Aggregated
+    - Wind_Offshore_Actual_Aggregated
+    - Wind_Onshore_Actual_Aggregated
+    - Total_Production_Actual
+    - Wind_Production_Day_Ahead_Delta_Actual
+    - Wind_Production_Intraday_Delta_Actual
+    - Solar_Production_Day_Ahead_Delta_Actual
+    - Solar_Production_Intraday_Delta_Actual
+    - Load_Delta_Actual
+    - Total_Production_Delta_Actual
+
+  LAG_PERIODS:
+    min_lag: 16
+    significant_lags: 3
+    max_lags: 200
+
+  FIXED_LAGS:
+    Actual_Load: [ 96, 97, 93, 17 ]
+    Biomass_Actual_Aggregated: [ 96, 193, 97, 17 ]
+    Energy_storage_Actual_Aggregated: [ 96, 17, 90, 91 ]
+    Fossil_Gas_Actual_Aggregated: [ 193, 93, 97, 17 ]
+    Fossil_Hard_coal_Actual_Aggregated: [ 96, 97, 61, 17 ]
+    Fossil_Oil_Actual_Aggregated: [ 96, 97, 98, 17 ]
+    Hydro_Pumped_Storage_Actual_Aggregated: [ 97, 17, 86, 87 ]
+    Hydro_Pumped_Storage_Actual_Consumption: [ 80, 97, 96, 17 ]
+    Hydro_Run-of-river_and_poundage_Actual_Aggregated: [ 193, 101, 97, 17 ]
+    Hydro_Water_Reservoir_Actual_Aggregated: [ 193, 84, 97, 17 ]
+    Nuclear_Actual_Aggregated: [ 17, 18, 19 ]
+    Other_Actual_Aggregated: [ 89, 42, 97, 17 ]
+    Other_renewable_Actual_Aggregated: [ 105, 98, 97, 17 ]
+    Solar_Actual_Aggregated: [ 96, 17, 93, 95 ]
+    Waste_Actual_Aggregated: [ 65, 35, 97, 17 ]
+    Wind_Onshore_Actual_Aggregated: [ 96, 97, 93, 17 ]
+    Total_Production_Actual: [ 193, 93, 97, 17 ]
+    Wind_Production_Day_Ahead_Delta_Actual: [ 96, 193, 97, 17 ]
+    Wind_Production_Intraday_Delta_Actual: [ 193, 93, 97, 17 ]
+    Solar_Production_Day_Ahead_Delta_Actual: [ 193, 93, 97, 17 ]
+    Solar_Production_Intraday_Delta_Actual: [ 193, 93, 97, 17 ]
+    Load_Delta_Actual: [ 193, 17, 94, 97 ]
+    Total_Production_Delta_Actual: [ 193, 93, 97, 17 ]
