@@ -206,7 +206,7 @@ Coverage is slightly below the expected 80%, the model's intervals are a bit too
 ![Pinball Loss](assets/Pinball_loss_vs_Baseline.png)
 
 The model beats the baseline on all quantiles. Improvement is strongest around the median (~35-39%) 
-and weaker at the tails (~18-20%), extreme price spikes are hard to anticipate at a 4h horizon.
+and weaker at the tails (~18-20%), extreme price spikes are hard to anticipate at a 2h horizon + 2h info lag.
 
 ---
 
@@ -216,7 +216,7 @@ and weaker at the tails (~18-20%), extreme price spikes are hard to anticipate a
 
 Most of the time the true price stays within the intervals, but extreme spikes fall outside, 
 these are sudden imbalance events that cannot be anticipated from day-ahead and intraday forecasts 
-alone, combined with the 4h information lag. This also explains the 74-75% coverage vs the expected 80%.
+alone, combined with the 2h information lag. This also explains the 74-75% coverage vs the expected 80%.
 
 ---
 
@@ -227,7 +227,7 @@ alone, combined with the 4h information lag. This also explains the 74-75% cover
 The error distribution looks Gaussian at first glance, but the tails tell a different story. 
 Min error hits -1857 €/MWh, max 315 €/MWh, std of 37 €/MWh.\
 The [-62, +100] €/MWh range 
-covers the normal regime well, outside of that, the model has no chance given the 4h information 
+covers the normal regime well, outside of that, the model has no chance given the information 
 lag and prediction horizon.
 
 ---
