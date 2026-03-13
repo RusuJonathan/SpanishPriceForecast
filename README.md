@@ -1,6 +1,6 @@
 # Spanish Imbalance Price Forecast
 
-Quantile regression model to forecast Spanish electricity imbalance prices (Long and Short) at a 4-hour horizon, using data from the ENTSO-E Transparency Platform.
+Quantile regression model to forecast Spanish electricity imbalance prices (Long and Short) at a 2-hour horizon (+2-hour information lag), using data from the ENTSO-E Transparency Platform.
 
 ---
 
