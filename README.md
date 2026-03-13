@@ -21,8 +21,6 @@ Spain uses a **dual imbalance pricing system**:
 - **Long price**: applied to actors with a surplus position (they produced more than scheduled)
 - **Short price**: applied to actors with a deficit position (they consumed more or produced less than scheduled)
 
-The relationship is typically: `Long price < Day-ahead price < Short price`
-
 The settlement depends on both the system direction and the actor's individual position:
 
 - If the system is **short** (deficit), actors with a **long** imbalance are rewarded, while actors also short are penalized.
@@ -184,7 +182,7 @@ The baseline predicts the empirical quantile of the training set, no features, n
 | Q0.75 | 10.82 | 28.3% | 9.85 | 26.2% |
 | Q0.9 | 6.47 | 18.3% | 5.91 | 18.0% |
 
-The model beats the baseline on all quantiles. Improvement is strongest around the median (~35-39%) and weaker at the tails (~18-20%), which is expected, extreme spikes are structurally hard to anticipate at a 4h horizon.
+The model beats the baseline on all quantiles. Improvement is strongest around the median (~35-39%) and weaker at the tails (~18-20%), which is expected, extreme spikes are structurally hard to anticipate at a 2h horizon.
 
 ### Calibration
 
